@@ -1,18 +1,293 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-</html>
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Mi App con Electron</title>
-</head>
-<body>
-    <h1>¡Hola, mundo desde Electron!</h1>
-</body>
+  <head>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body class="bg-light">
+  <div class="container mt-5">
+  <!-- Navegación de Tabs -->
+  <ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="menu-tab" data-bs-toggle="tab" data-bs-target="#menu" type="button" role="tab" aria-controls="menu" aria-selected="true">Menu</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="pedido-tab" data-bs-toggle="tab" data-bs-target="#pedido" type="button" role="tab" aria-controls="pedido" aria-selected="false">Pedido</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="empresa-tab" data-bs-toggle="tab" data-bs-target="#empresa" type="button" role="tab" aria-controls="empresa" aria-selected="false">Empresa</button>
+    </li>
+  </ul>
+
+  <!-- Contenido de Tabs -->
+  <div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" id="menu" role="tabpanel" aria-labelledby="menu-tab">
+      <p>Cualquier wea</p>
+    </div>
+
+    <div class="tab-pane fade" id="pedido" role="tabpanel" aria-labelledby="pedido-tab">
+      <h2 class="text-2xl font-bold mb-4">Agregar Datos a la Tabla</h2>
+      <!-- Fila para los campos de cantidad alineados horizontalmente -->
+      <div class="mb-3">
+        <label for="direccion" class="form-label">Dirección:</label>
+        <input type="text" class="form-control" id="direccion" placeholder="Ingrese la dirección"/>
+      </div>
+      <div class="mb-3">
+        <label for="telefono" class="form-label">Teléfono:</label>
+        <input type="text" class="form-control" id="telefono" placeholder="Ingrese el teléfono"/>
+      </div>
+      <div class="row mb-3">
+        <div class="col">
+          <label for="cantidadBot20" class="form-label">Cantidad de Bot 20:</label>
+          <input type="number" class="form-control" id="cantidadBot20" min="0"/>
+        </div>
+        <div class="col">
+          <label for="cantidadBot10" class="form-label">Cantidad de Bot 10:</label>
+          <input type="number" class="form-control" id="cantidadBot10" min="0"/>
+        </div>
+        <div class="col">
+          <label for="cantidadSoda" class="form-label">Cantidad de Soda:</label>
+          <input type="number" class="form-control" id="cantidadSoda" min="0" />
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="detalles" class="form-label">Detalles (opcional):</label>
+        <input type="text" class="form-control" id="detalles" placeholder="Ingrese detalles adicionales"/>
+      </div>
+      <button class="btn btn-secondary" onclick="agregarContenido()">Agregar a la tabla</button>
+      <h6>____________________________________________________________________________</h6>
+
+      <div class="table-responsive mt-4">
+      <table class="table table-bordered table-striped caption-top" id="tabla-usuarios">
+        <caption>Lista de Usuarios</caption>
+        <thead class="table-light">
+          <tr>
+            <th scope="col">N°</th>
+            <th scope="col">Dirección</th>
+            <th scope="col">Teléfono</th>
+            <th scope="col">Pedido</th>
+            <th scope="col">Detalles</th>
+            <th scope="col">Estado</th>
+            <th scope="col">Foto</th>
+            <th scope="col">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Las filas se agregarán aquí -->
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    <div class="tab-pane fade" id="empresa" role="tabpanel" aria-labelledby="empresa-tab">
+      <h2 class="text-2xl font-bold mb-4">Agregar Datos de Empresa</h2>
+        <div class="mb-3">
+          <label for="razonSocial" class="form-label">Razon Social:</label>
+          <input type="number" class="form-control" id="razonSocial" placeholder="Ingrese razon social"/>
+        </div>
+        <div class="mb-3">
+          <label for="rutEmpresa" class="form-label">Rut Empresa:</label>
+          <input type="number" class="form-control" id="rutEmpresa" placeholder="Ingrese el rut empresarial"/>
+        </div>
+        <div class="mb-3">
+          <label for="nombreEmpresa" class="form-label">Nombre Empresa:</label>
+          <input type="text" class="form-control" id="nombreEmpresa" placeholder="Ingrese el nombre"/>
+        </div>
+        <div class="mb-3">
+          <label for="monto" class="form-label">Monto:</label>
+          <input type="number" class="form-control" id="monto" placeholder="Ingrese el monto total" min="0"/>
+        </div>
+        <button class="btn btn-secondary" onclick="agregarEmpresa()">Agregar Empresa</button>
+        <h6>____________________________________________________________________________</h6>
+        <div class="table-responsive mt-4">
+          <table class="table table-bordered table-striped caption-top" id="tabla-empresas">
+            <caption>Lista de Empresas</caption>
+            <thead class="table-light">
+              <tr>
+                <th scope="col">N°</th>
+                <th scope="col">Razon Social</th>
+                <th scope="col">Rut Empresa</th>
+                <th scope="col">Nombre Empresa</th>
+                <th scope="col">Monto</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Las filas se agregarán aquí -->
+            </tbody>
+          </table>
+        </div>
+        <button class="btn btn-secondary" onclick="mostrarEmpresa()">Listado de Empresas</button>
+    </div>
+  </div>
+
+  
+  <script>
+    let contador = 1;
+
+    function agregarContenido() {
+      const direccion = document.getElementById('direccion').value;
+      const telefono = document.getElementById('telefono').value;
+      const cantidadBot20 = document.getElementById('cantidadBot20').value;
+      const cantidadBot10 = document.getElementById('cantidadBot10').value;
+      const cantidadSoda = document.getElementById('cantidadSoda').value;
+      const detalles = document.getElementById('detalles').value;
+
+      let pedido = '';
+      if (cantidadBot20 > 0) pedido += `Bot 20 (${cantidadBot20}) `;
+      if (cantidadBot10 > 0) pedido += `Bot 10 (${cantidadBot10}) `;
+      if (cantidadSoda > 0) pedido += `Soda (${cantidadSoda})`;
+
+      // Validar que haya al menos un pedido y una dirección
+      if (!direccion || !pedido) {
+        alert('La dirección y al menos un pedido son obligatorios.');
+        return;
+      }
+
+      // Crear una nueva fila con el contador autoincremental
+      const tr = document.createElement('tr');
+
+      // Crear las celdas de la fila
+      const tdNumero = document.createElement('td');
+      tdNumero.textContent = contador++;
+      tr.appendChild(tdNumero);
+
+      const tdDireccion = document.createElement('td');
+      tdDireccion.textContent = direccion;
+      tr.appendChild(tdDireccion);
+
+      const tdTelefono = document.createElement('td');
+      tdTelefono.textContent = telefono;
+      tr.appendChild(tdTelefono);
+
+      const tdPedido = document.createElement('td');
+      tdPedido.textContent = pedido;
+      tr.appendChild(tdPedido);
+
+      const tdDetalles = document.createElement('td');
+      tdDetalles.textContent = detalles || 'N/A'; // Si detalles está vacío, mostrar 'N/A'
+      tr.appendChild(tdDetalles);
+
+      const tdEstado = document.createElement('td');
+      const selectEstado = document.createElement('select');
+      selectEstado.className = 'form-select';
+      selectEstado.innerHTML = `
+        <option value="Pendiente">Pendiente</option>
+        <option value="Entregado">Entregado</option>
+        <option value="Cancelado">Cancelado</option>
+      `;
+      selectEstado.onchange = function () {
+        if (this.value === 'Cancelado') {
+          const inputMotivo = document.createElement('input');
+          inputMotivo.type = 'text';
+          inputMotivo.className = 'form-control mt-2';
+          inputMotivo.placeholder = 'Motivo de cancelación';
+          this.parentElement.appendChild(inputMotivo);
+        } else {
+          const inputMotivo = this.parentElement.querySelector('input');
+          if (inputMotivo) {
+            this.parentElement.removeChild(inputMotivo);
+          }
+        }
+      };
+      tdEstado.appendChild(selectEstado);
+      tr.appendChild(tdEstado);
+
+      const tdFoto = document.createElement('td');
+      const inputFoto = document.createElement('input');
+      inputFoto.type = 'file';
+      inputFoto.accept = 'image/*';
+      inputFoto.capture = 'environment';
+      inputFoto.className = 'form-control';
+      tdFoto.appendChild(inputFoto);
+      tr.appendChild(tdFoto);
+
+      const tdAcciones = document.createElement('td');
+      const btnEliminar = document.createElement('button');
+      btnEliminar.className = 'btn btn-danger';
+      btnEliminar.innerHTML = '<i class="bi bi-trash"></i>';
+      btnEliminar.onclick = function () {
+        tr.remove();
+      };
+      tdAcciones.appendChild(btnEliminar);
+      tr.appendChild(tdAcciones);
+
+      // Agregar la fila a la tabla
+      const tabla = document
+        .getElementById('tabla-usuarios')
+        .getElementsByTagName('tbody')[0];
+      tabla.appendChild(tr);
+
+      // Limpiar los campos de entrada
+      document.getElementById('direccion').value = '';
+      document.getElementById('telefono').value = '';
+      document.getElementById('cantidadBot20').value = 0;
+      document.getElementById('cantidadBot10').value = 0;
+      document.getElementById('cantidadSoda').value = 0;
+      document.getElementById('detalles').value = '';
+    }
+
+    // Para las EMPRESAS
+    let contador2 = 1;
+
+    function agregarEmpresa() {
+      const razonSocial = document.getElementById('razonSocial').value;
+      const rutEmpresa = document.getElementById('rutEmpresa').value;
+      const nombreEmpresa = document.getElementById('nombreEmpresa').value;
+      const monto = document.getElementById('monto').value;
+
+      // Validar que haya al menos una razon social y rut
+      if (!razonSocial || !rutEmpresa) {
+        alert('La razon social y el rut son obligatorios.');
+        return;
+      }
+
+      // Crear una nueva fila con el contador autoincremental
+      const tr = document.createElement('tr');
+
+      // Crear las celdas de la fila
+      const tdNumero = document.createElement('td');
+      tdNumero.textContent = contador2++;
+      tr.appendChild(tdNumero);
+
+      const tdRazon = document.createElement('td');
+      tdRazon.textContent = razonSocial;
+      tr.appendChild(tdRazon);
+
+      const tdRut = document.createElement('td');
+      tdRut.textContent = rutEmpresa;
+      tr.appendChild(tdRut);
+
+      const tdNombre = document.createElement('td');
+      tdNombre.textContent = nombreEmpresa;
+      tr.appendChild(tdNombre);
+
+      const tdMonto = document.createElement('td');
+      tdMonto.textContent = monto;
+      tr.appendChild(tdMonto);
+
+      // Agregar la fila a la tabla
+      const tabla2 = document
+        .getElementById('tabla-empresas')
+        .getElementsByTagName('tbody')[0];
+      tabla2.appendChild(tr);
+
+      // Limpiar los campos de entrada
+      document.getElementById('razonSocial').value = '';
+      document.getElementById('rutEmpresa').value = '';
+      document.getElementById('nombreEmpresa').value = 0;
+      document.getElementById('monto').value = 0;
+    }
+  </script>
+
+    <!-- Vinculamos el JS de Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
 </html>
